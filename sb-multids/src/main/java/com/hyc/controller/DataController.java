@@ -47,4 +47,10 @@ public class DataController {
         dataMap.put("company",company);
         return JSON.toJSONString(dataMap);
     }
+    
+    @GetMapping("updateDept/{id}")
+    public String updateDept(@PathVariable Integer id){
+        Dept dept = dataService.updateDept(id);
+        return JSON.toJSONString(dept);
+    }
 }

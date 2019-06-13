@@ -1,5 +1,12 @@
 package com.hyc.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.hyc.dao.CompanyMapper;
 import com.hyc.dao.DeptMapper;
 import com.hyc.dao.UserMapper;
@@ -7,10 +14,6 @@ import com.hyc.entity.Company;
 import com.hyc.entity.Dept;
 import com.hyc.entity.User;
 import com.hyc.util.TargetDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class DataService {
@@ -40,6 +43,16 @@ public class DataService {
     public Dept findDeptById(Integer id) {
         logger.info("在ds1数据源上查询Dept信息");
         return deptMapper.selectByPrimaryKey(id);
+    }
+    
+    @TargetDataSource(name = "ds2")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Dept updateDept(Integer id){
+        Dept dept = deptMapper.selectByPrimaryKey(id);
+        dept.setDeptno("D0001");
+        deptMapper.updateByPrimaryKeySelective(dept);
+        //int i = 1 / 0;
+        return dept;
     }
 
 }
