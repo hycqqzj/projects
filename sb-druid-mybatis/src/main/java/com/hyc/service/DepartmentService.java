@@ -29,9 +29,9 @@ public class DepartmentService {
         if(department == null) {
             throw new BusinessException("部门不存在");
         }
-        Department updateDetp = new Department();
-        updateDetp.setId(department.getId());
-        updateDetp.setManagerCode(empCode);
-        departmentMapper.updateByPrimaryKeySelective(updateDetp);
+        Department updateDept = new Department();
+        updateDept.setId(department.getId());
+        updateDept.setManagerCode(empCode);
+        departmentMapper.updateByPrimaryKeySelective(updateDept);
     }
 }

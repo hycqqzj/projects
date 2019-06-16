@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
-    @Autowired
-    private DepartmentService departmentService;
 
     @GetMapping("/emp/findById/{id}")
     public Employee findById(@PathVariable Integer id) {
@@ -29,9 +27,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/emp/addManager")
-    public String addManager(Employee employee) {
-        employee = employeeService.add(employee);
-        departmentService.setDeptManager(employee.getCode(),employee.getDeptCode());
+    public String addManager(Employee employee, String assetCode) {
+        employee = employeeService.addManager(employee, assetCode);
         return JSON.toJSONString(employee);
     }
 

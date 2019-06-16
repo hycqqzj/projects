@@ -198,4 +198,5 @@ public class Employee {
     public void setDeptCode(String deptCode) {
         this.deptCode = deptCode == null ? null : deptCode.trim();
     }
+
 }
