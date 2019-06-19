@@ -25,4 +25,10 @@ public class UserController {
         return JSON.toJSONString(ret);
     }
 
+    @GetMapping("user/delUser/{id}")
+    public String deleteUserById(@PathVariable Integer id) {
+        User user = userService.deleteUserById(id);
+        return JSON.toJSONString(user);
+    }
+
 }

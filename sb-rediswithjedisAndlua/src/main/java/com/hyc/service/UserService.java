@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -49,6 +50,16 @@ public class UserService {
         args.add("hyc");
 
         return redisUtil.luaSet(luaScript, keys, args);
+    }
+
+    public User deleteUserById(Integer id){
+        String key = "user_" + id;
+        String requestId = UUID.randomUUID().toString();
+        redisUtil.tryLock(key, requestId, 300*1000);
+        User user = userMapper.selectByPrimaryKey(id);
+        userMapper.deleteByPrimaryKey(id);
+        redisUtil.releaseLock(key, requestId);
+        return user;
     }
 
 }

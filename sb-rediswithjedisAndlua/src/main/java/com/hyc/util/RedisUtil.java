@@ -88,4 +88,34 @@ public class RedisUtil {
 
         return ret;
     }
+
+    public boolean tryLock(String lockKey, String requestId, int expireTime) {
+        Jedis jedis = null;
+        try {
+            jedis = (Jedis) stringRedisTemplate.getConnectionFactory().getConnection().getNativeConnection();
+            return RedisLockUtil.tryLock(jedis, lockKey, requestId, expireTime);
+        } catch (Exception e) {
+            logger.info("luaSet执行失败", e);
+        } finally {
+            if(jedis != null && jedis.isConnected()) {
+                jedis.close();
+            }
+        }
+        return false;
+    }
+
+    public boolean releaseLock(String lockKey, String requestId) {
+        Jedis jedis = null;
+        try {
+            jedis = (Jedis) stringRedisTemplate.getConnectionFactory().getConnection().getNativeConnection();
+            return RedisLockUtil.releaseLock(jedis, lockKey, requestId);
+        } catch (Exception e) {
+            logger.info("luaSet执行失败", e);
+        } finally {
+            if(jedis != null && jedis.isConnected()) {
+                jedis.close();
+            }
+        }
+        return false;
+    }
 }
