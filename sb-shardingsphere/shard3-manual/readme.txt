@@ -1,0 +1,1 @@
+springboot集成shardingsphere3，全手工配置
