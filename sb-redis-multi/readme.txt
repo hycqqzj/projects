@@ -1,1 +1,1 @@
-SpringBoot2.1.5集成redis集群和哨兵
+SpringBoot2.1.5集成redis集群和哨兵模式
