@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!-- 指定数据库驱动包，地址按照你的项目目录修改 -->
+	<classPathEntry location="F:/maven/repository/mysql/mysql-connector-java/5.1.47/mysql-connector-java-5.1.47.jar" />
+	<!-- 指定数据库链接参数 -->
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressDate" value="false" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/test"
+			userId="root" password="123456">
+		</jdbcConnection>
+
+		<!-- 是否考虑使用BigDecimal类型 -->
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="true" />
+		</javaTypeResolver>
+
+		<!-- 指定实体类生成 -->
+		<javaModelGenerator targetPackage="com.hyc.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        
+		<!-- 指定SQL定义文件生成 -->
+		<sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 指定Mapper接口生成 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.hyc.dao" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<!-- 将数据库中所有表 
+		<table tableName="t_order" domainObjectName="Order"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableUpdateByExample="false" enableSelectByExample="false">
+		</table>
+		
+		<table tableName="t_order_item" domainObjectName="OrderItem"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableUpdateByExample="false" enableSelectByExample="false">
+		</table>
+		
+		<table tableName="t_product" domainObjectName="Product"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableUpdateByExample="false" enableSelectByExample="false">
+		</table>
+		
+		<table tableName="t_user" domainObjectName="User"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableUpdateByExample="false" enableSelectByExample="false">
+		</table>
+		
+		<table tableName="t_user_address" domainObjectName="UserAddress"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableUpdateByExample="false" enableSelectByExample="false">
+		</table>
+		-->
+		
+		<table tableName="t_order_item" domainObjectName="OrderItem"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableUpdateByExample="false" enableSelectByExample="false">
+		</table>
+		
+
+	</context>
+</generatorConfiguration>

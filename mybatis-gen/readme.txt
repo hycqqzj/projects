@@ -1,0 +1,2 @@
+MyBatis-Generator项目
+执行maven目标：mybatis-generator:generate
