@@ -1,0 +1,1 @@
+自定义PropertySource使用，从数据库加载属性配置
