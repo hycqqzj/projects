@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: promoter-web-feign
+
+server:
+  port: 9300
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.21.15.112:8000/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: 172.21.15.112:9300
+    status-page-url-path: /info
+    health-check-url-path: /health
+
+management:
+  health:
+    status:
+      order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
