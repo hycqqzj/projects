@@ -1,4 +1,4 @@
-package com.hyc.queue;
+package com.hyc.structure.queue;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

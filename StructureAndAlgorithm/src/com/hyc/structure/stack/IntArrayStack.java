@@ -1,4 +1,4 @@
-package com.hyc.stack;
+package com.hyc.structure.stack;
 
 public class IntArrayStack {
 	private static final int MAX_DEPTH = 50;

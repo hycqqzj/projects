@@ -1,4 +1,4 @@
-package com.hyc.sort;
+package com.hyc.algorithm.sort;
 
 import java.util.Arrays;
 

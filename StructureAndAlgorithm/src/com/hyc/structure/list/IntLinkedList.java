@@ -1,4 +1,4 @@
-package com.hyc.list;
+package com.hyc.structure.list;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

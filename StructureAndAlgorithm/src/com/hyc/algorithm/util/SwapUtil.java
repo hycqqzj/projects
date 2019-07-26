@@ -1,4 +1,4 @@
-package com.hyc.util;
+package com.hyc.algorithm.util;
 
 public class SwapUtil {
 	

@@ -1,6 +1,6 @@
-package com.hyc.sort;
+package com.hyc.algorithm.sort;
 
-import com.hyc.util.SwapUtil;
+import com.hyc.algorithm.util.SwapUtil;
 
 public class ShellSort {
 

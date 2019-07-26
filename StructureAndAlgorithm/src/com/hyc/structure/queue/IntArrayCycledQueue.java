@@ -1,8 +1,8 @@
-package com.hyc.queue;
+package com.hyc.structure.queue;
 
-public class IntArrayQueue {
+public class IntArrayCycledQueue {
 	private static final int DEFAULT_CAPACITY = 20;
-	
+
 	// 数组存储元素
 	private int[] data;
 	// 大小
@@ -11,13 +11,13 @@ public class IntArrayQueue {
 	private int head;
 	// 队尾
 	private int tail;
-	
-	public IntArrayQueue() {
+
+	public IntArrayCycledQueue() {
 		data = new int[DEFAULT_CAPACITY];
 		head = tail = size = 0;
 	}
-	
-	public IntArrayQueue(int capacity) {
+
+	public IntArrayCycledQueue(int capacity) {
 		if (capacity > 0 && capacity < Integer.MAX_VALUE) {
 			data = new int[capacity];
 		} else {
@@ -25,7 +25,7 @@ public class IntArrayQueue {
 		}
 		head = tail = size = 0;
 	}
-	
+
 	/**
 	 * 入队
 	 * 
@@ -33,20 +33,14 @@ public class IntArrayQueue {
 	 * @return
 	 */
 	public Boolean enqueue(int item) {
-		// 队列已满
-		if(size == data.length) {
+		if (isFull()) {
 			throw new IndexOutOfBoundsException("数组越界");
 		}
-	    // 队列未满，然而尾指针移到末尾，此时需要进行数组紧凑
-		if(tail == data.length) {
-			System.arraycopy(data, head, data, 0, size);
-			head = 0;
-			tail = size;
-		}
-		
-		data[tail++] = item;
+
+		data[tail] = item;
+		tail = (tail + 1) % data.length;
 		size++;
-		
+
 		return true;
 	}
 	
@@ -56,20 +50,40 @@ public class IntArrayQueue {
 	 * @return
 	 */
 	public int dequeue() {
-		if(head == tail) {
+		if(isEmpty()) {
 			throw new IndexOutOfBoundsException("数组越界");
 		}
+		
 		size--;
-		return data[head++];
+		int ret = data[head];
+		head = (head + 1) % data.length;
+		return ret;
 	}
-	
+
+	/**
+	 * 队列是否已满
+	 * 
+	 * @return
+	 */
+	public Boolean isFull() {
+		return (tail + 1) % data.length == head;
+	}
+
+	/**
+	 * 队列是否为空
+	 * 
+	 * @return
+	 */
+	public Boolean isEmpty() {
+		return head == tail;
+	}
+
 	public int getSize() {
 		return size;
 	}
-	
 
 	public static void main(String[] args) {
-		IntArrayQueue que = new IntArrayQueue(4);
+		IntArrayCycledQueue que = new IntArrayCycledQueue(5);
 		que.enqueue(1);
 		que.enqueue(2);
 		que.enqueue(3);
@@ -85,6 +99,7 @@ public class IntArrayQueue {
 		System.out.println(que.dequeue());
 		System.out.println(que.dequeue());
 		System.out.println(que.dequeue());
+
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.hyc.stack;
+package com.hyc.structure.stack;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
