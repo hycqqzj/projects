@@ -24,13 +24,15 @@ public class MergeSort {
 	 * @param end
 	 */
 	private static void sort(int[] arr, int begin, int end) {
+		if(begin >= end) {
+			return;
+		}
+		
 		int mid = (begin + end) / 2;
 
-		if (begin < end) {
-			sort(arr, begin, mid);
-			sort(arr, mid + 1, end);
-			mergeArr(arr, begin, end);
-		}
+		sort(arr, begin, mid);
+		sort(arr, mid + 1, end);
+		mergeArr(arr, begin, end);
 	}
 
 	private static void mergeArr(int[] arr, int begin, int end) {
