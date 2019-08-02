@@ -2,19 +2,16 @@ package com.hyc.structure.tree;
 
 import java.util.LinkedList;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 二叉树
  */
 public class BinTree {
+	@Setter
+	@Getter
 	private TreeNode root;
-
-	public TreeNode getRoot() {
-		return root;
-	}
-
-	public void setRoot(TreeNode root) {
-		this.root = root;
-	}
 
 	/**
 	 * 前序遍历，data-left-right
@@ -67,27 +64,49 @@ public class BinTree {
 	 * @param queue
 	 */
 	public void levelOrder(LinkedList<TreeNode> queue) {
-		if(queue == null) {
+		if (queue == null) {
 			queue = new LinkedList<TreeNode>();
-			if(root != null) {
+			if (root != null) {
+				// 根节点入队
 				queue.add(root);
 			}
 		}
-		
+		// 取出队首节点
 		TreeNode node = queue.poll();
-		if(node == null) {
+		// 队列里没有数据则结束
+		if (node == null) {
 			return;
 		}
+		// 访问该节点
+		System.out.print(node.getData() + ",");
 		
-		System.out.println(node.getData());
-		if(node.getLeft() != null) {
+		// 左孩子入队
+		if (node.getLeft() != null) {
 			queue.add(node.getLeft());
 		}
-		if(node.getRight() != null) {
+		// 右孩子入队
+		if (node.getRight() != null) {
 			queue.add(node.getRight());
 		}
 		
+		// 递归遍历
 		levelOrder(queue);
+	}
+
+	/**
+	 * 计算树的高度 递归法：树的高度=max(左子树高度，右子树高度)+1
+	 * 
+	 * @param rootNode
+	 * @return
+	 */
+	public int getHeight(TreeNode rootNode) {
+		if (rootNode == null || (rootNode.getLeft() == null && rootNode.getRight() == null)) {
+			return 0;
+		}
+
+		int leftHeight = getHeight(rootNode.getLeft());
+		int rightHeight = getHeight(rootNode.getRight());
+		return Math.max(leftHeight, rightHeight) + 1;
 	}
 
 	public static void main(String[] args) {
@@ -104,6 +123,7 @@ public class BinTree {
 		TreeNode node11 = new TreeNode(11);
 		TreeNode node12 = new TreeNode(12);
 		TreeNode node13 = new TreeNode(13);
+		TreeNode node14 = new TreeNode(14);
 
 		root.insertLeftAndRight(node2, node3);
 		node2.insertLeftAndRight(node4, node5);
@@ -113,11 +133,15 @@ public class BinTree {
 		node7.insertLeftAndRight(node11, null);
 		node8.insertLeftAndRight(node12, null);
 		node11.insertLeftAndRight(null, node13);
+		node12.insertLeftAndRight(node14, null);
 
 		BinTree tree = new BinTree();
 		tree.setRoot(root);
 
 		tree.levelOrder(null);
+
+		System.out.println("\r\n=================");
+		System.out.println(tree.getHeight(tree.root));
 	}
 
 }
