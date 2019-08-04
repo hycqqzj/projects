@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=GMT%2B8&useSSL=false
+    username: root
+    password: 123456
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 9100
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.21.15.112:8000/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: 172.21.15.112:9100
+    status-page-url-path: /info
+    health-check-url-path: /health
+
+management:
+  health:
+    status:
+      order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
