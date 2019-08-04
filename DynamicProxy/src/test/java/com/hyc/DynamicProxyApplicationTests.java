@@ -6,6 +6,7 @@ import sun.misc.ProxyGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.hyc.proxy.cglib.DyncMethodInterceptor;
@@ -37,7 +38,12 @@ public class DynamicProxyApplicationTests {
 	@Test
 	public void testCGLibDyn() {
 		DyncMethodInterceptor interceptor = new DyncMethodInterceptor();
-		SystemServiceImpl proxyService = (SystemServiceImpl) interceptor.getProxy(SystemServiceImpl.class);
+		
+		Enhancer enhancer = new Enhancer();
+		enhancer.setSuperclass(SystemServiceImpl.class);
+		enhancer.setCallback(interceptor);
+		SystemServiceImpl proxyService = (SystemServiceImpl) enhancer.create();
+		
 		Object res = proxyService.saveSystemInfo("haha");
 		System.out.println("方法返回值：" + res);
 	}
