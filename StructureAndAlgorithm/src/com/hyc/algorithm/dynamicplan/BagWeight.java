@@ -29,7 +29,10 @@ public class BagWeight {
 		}
 	}
 
-	public int putBag() {
+	/**
+	 * 利用二维数组
+	 */
+	public void putBag() {
 		// 动态规划数组
 		int[][] states = new int[productWeightArr.length][bagTotal + 1];
 		for (int i = 0; i < states.length; i++) {
@@ -59,19 +62,35 @@ public class BagWeight {
 				}
 			}
 		}
-
-		showTwoDimensionalArr(states);
-
+		
+		// 找出最大值和最大值对应的位置
 		int max = 0;
+		int loc = 0;
 		for (int i = 0; i <= bagTotal; i++) {
 			if (states[productWeightArr.length - 1][i] > max) {
 				max = states[productWeightArr.length - 1][i];
+				loc = i;
 			}
 		}
-
-		return max;
+		System.out.println("价值最大值为：" + max);
+		
+		for (int i = productWeightArr.length - 1; i >= 1; i--) {
+			// 选择了第i个物品
+			if(states[i - 1][loc - productWeightArr[i]] >= 0 && states[i - 1][loc] != states[i][loc] && loc - productWeightArr[i] >= 0) {
+				loc = loc - productWeightArr[i];
+				System.out.println(i);
+			} //else 没有选择这个物品loc不变
+		}
+		if(loc != 0) {
+			System.out.println(0);
+		}
 	}
 
+	/**
+	 * 使用一维数组
+	 * 
+	 * @return
+	 */
 	public int putBag2() {
 		// 动态规划数组
 		int[] states = new int[bagTotal + 1];
@@ -108,7 +127,7 @@ public class BagWeight {
 		int[] productWeightArr = new int[] { 2, 2, 4, 6, 3 };
 		int[] producValueArr = new int[] { 3, 4, 8, 9, 6 };
 		BagWeight bag = new BagWeight(bagTotal, productWeightArr, producValueArr);
-		// System.out.println(bag.putBag());
+		//bag.putBag();
 		System.out.println(bag.putBag2());
 	}
 
