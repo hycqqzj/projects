@@ -31,6 +31,13 @@ public class MaxSeq {
 		return max;
 	}
 
+	/**
+	 * 获取小于等于指定值的最大子序列
+	 * 
+	 * @param a指定值
+	 * @param aLoc指定值在数组中的位置
+	 * @return
+	 */
 	private int maxSeqFirstLessOrEq(int a, int aLoc) {
 		int loc = -1;
 		int[] temp = new int[aLoc];

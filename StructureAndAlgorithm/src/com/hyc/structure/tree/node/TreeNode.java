@@ -1,4 +1,4 @@
-package com.hyc.structure.tree;
+package com.hyc.structure.tree.node;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

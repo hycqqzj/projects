@@ -1,5 +1,7 @@
 package com.hyc.structure.tree;
 
+import com.hyc.structure.tree.node.TreeNode;
+
 import lombok.Getter;
 import lombok.Setter;
 

@@ -2,6 +2,8 @@ package com.hyc.structure.tree;
 
 import java.util.LinkedList;
 
+import com.hyc.structure.tree.node.TreeNode;
+
 import lombok.Getter;
 import lombok.Setter;
 
