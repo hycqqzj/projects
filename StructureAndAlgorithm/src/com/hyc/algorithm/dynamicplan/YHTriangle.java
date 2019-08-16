@@ -14,19 +14,19 @@ public class YHTriangle {
 	}
 
 	/**
-	 * 计算最短路径（递归方法：第i,j个位置最小路径值为其左边最小路径和右边最小路径中的最小值+当前节点的值）
-	 * 动态规划方法-状态转移方程法
+	 * 计算最短路径（贪心方法：第i,j个位置最小路径值为其左边最小路径和右边最小路径中的最小值+当前节点的值）
+	 * 非动态规划方法，结果不一定是最优解
 	 * 
 	 * @param line行
 	 * @param column列
 	 * @return
 	 */
-	public int minPathDG(int line, int column) {
+	public int minPathGreedy(int line, int column) {
 		if (line == data.length - 1) {
 			return data[line][column];
 		}
 
-		return data[line][column] + Math.min(minPathDG(line + 1, column), minPathDG(line + 1, column + 1));
+		return data[line][column] + Math.min(minPathGreedy(line + 1, column), minPathGreedy(line + 1, column + 1));
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class YHTriangle {
 		int[][] data1 = new int[][] { { 5, -1, -1, -1, -1 }, { 7, 8, -1, -1, -1 }, { 2, 3, 4, -1, -1 },
 				{ 4, 9, 6, 1, -1 }, { 2, 7, 9, 4, 5 } };
 		YHTriangle yh1 = new YHTriangle(data1);
-		System.out.println(yh1.minPathDG(0, 0));
+		System.out.println(yh1.minPathGreedy(0, 0));
 
 		int[][] data2 = new int[][] { { 5, -1, -1, -1, -1 }, { 7, 8, -1, -1, -1 }, { 2, 3, 4, -1, -1 },
 				{ 4, 9, 6, 1, -1 }, { 2, 7, 9, 4, 5 } };

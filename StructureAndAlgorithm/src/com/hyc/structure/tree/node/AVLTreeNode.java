@@ -1,5 +1,8 @@
 package com.hyc.structure.tree.node;
 
+/**
+ * AVLÊ÷½Úµã
+ */
 public class AVLTreeNode<T extends Comparable<T>> {
 	public T data;
 	public int height;

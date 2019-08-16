@@ -83,26 +83,27 @@ public class AVLTree<T extends Comparable<T>> {
 
 		return balance(rootNode);
 	}
-	
+
 	public AVLTreeNode<T> remove(T data) {
-		if(data == null) {
+		if (data == null) {
 			throw new RuntimeException("要删除的数据为空");
 		}
-		
+
 		return remove(data, root);
 	}
-	
+
 	/**
 	 * 删除
-	 * @param data 要删除的值
+	 * 
+	 * @param data     要删除的值
 	 * @param rootNode 子树根节点
 	 * @return 删除后新子树的根节点
 	 */
 	private AVLTreeNode<T> remove(T data, AVLTreeNode<T> rootNode) {
-		if(rootNode == null) {
+		if (rootNode == null) {
 			return null;
 		}
-		
+
 		int cmp = data.compareTo(rootNode.data);
 		if (cmp < 0) {
 			// 在左子树中删除
@@ -110,7 +111,7 @@ public class AVLTree<T extends Comparable<T>> {
 		} else if (cmp > 0) {
 			// 在右子树中删除
 			rootNode.right = remove(data, rootNode.right);
-		} else if(rootNode.left != null && rootNode.right != null) {
+		} else if (rootNode.left != null && rootNode.right != null) {
 			// 有两个子节点，找到右子树中最小节点并另当前节点值等于最小节点值
 			rootNode.data = findMin(rootNode).data;
 			// 删除右子树中最小节点
@@ -119,7 +120,7 @@ public class AVLTree<T extends Comparable<T>> {
 			// 只有一个子节点
 			rootNode = rootNode.left != null ? rootNode.left : rootNode.right;
 		}
-		
+
 		return balance(rootNode);
 	}
 
