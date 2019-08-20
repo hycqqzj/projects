@@ -152,7 +152,7 @@ public class BinSearchTree {
 		
 		// 要删除的是根节点
 		if(delParent == null) {
-			root = null;
+			root = child;
 		} else if(delParent.getLeft() == del) {
 			// 要删除的节点是父节点的左节点
 			delParent.setLeft(child);
