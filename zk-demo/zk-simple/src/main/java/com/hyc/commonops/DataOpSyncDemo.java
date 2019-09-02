@@ -1,4 +1,4 @@
-package com.hyc;
+package com.hyc.commonops;
 
 import com.hyc.cons.Cons;
 import org.apache.zookeeper.*;
@@ -9,14 +9,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 异步操作节点并监听状态变化
+ * 同步操作节点并监听状态变化
  */
-public class DataOpASyncDemo implements Watcher {
+public class DataOpSyncDemo implements Watcher {
     private ZooKeeper zooKeeper = null;
     private CountDownLatch connectedSignal = new CountDownLatch(1);
 
     public static void main(String[] args) throws Exception {
-        DataOpASyncDemo demo = new DataOpASyncDemo();
+        DataOpSyncDemo demo = new DataOpSyncDemo();
         demo.operate();
     }
 
@@ -28,23 +28,26 @@ public class DataOpASyncDemo implements Watcher {
             connectedSignal.await();
 
             System.out.println("初始子节点为：");
-            zooKeeper.getChildren("/test", this, new MyChildrenCallback(), null);
+            List<String> zooChildren = zooKeeper.getChildren("/test", true);
+            for (String child : zooChildren) {
+                System.out.print(child + ",");
+            }
 
             // 创建节点
-            zooKeeper.exists("/test/person_hyc", this, new MyStatCallback(), null);
-            zooKeeper.exists("/test/person_cxh", this, new MyStatCallback(), null);
-            zooKeeper.create("/test/person_hyc", "hyc".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL, new MyCreate2Callback(), null);
+            Stat hycStat = zooKeeper.exists("/test/person_hyc", true);
+            Stat cxhStat = zooKeeper.exists("/test/person_cxh", true);
+            zooKeeper.create("/test/person_hyc", "hyc".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
             TimeUnit.SECONDS.sleep(1);
-            zooKeeper.create("/test/person_cxh", "cxh".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL, new MyCreate2Callback(), null);
+            zooKeeper.create("/test/person_cxh", "cxh".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
             TimeUnit.SECONDS.sleep(1);
 
             // 更新节点
             zooKeeper.setData("/test/person_hyc", "hycUpdate".getBytes(), -1);
             TimeUnit.SECONDS.sleep(1);
-//
+
             // 删除节点
-//            zooKeeper.delete("/test/person_hyc", -1);
-//            zooKeeper.delete("/test/person_cxh", -1);
+            zooKeeper.delete("/test/person_hyc", -1);
+            zooKeeper.delete("/test/person_cxh", -1);
 
             while (true) {
                 TimeUnit.SECONDS.sleep(3);
@@ -57,7 +60,7 @@ public class DataOpASyncDemo implements Watcher {
     }
 
     private void releaseConnection() {
-        if (this.zooKeeper != null) {
+        if (null != this.zooKeeper) {
             try {
                 this.zooKeeper.close();
             } catch (InterruptedException e) {
@@ -83,7 +86,11 @@ public class DataOpASyncDemo implements Watcher {
                     System.out.println("\r\n监听到节点删除事件，path为：" + event.getPath());
                 } else if (Event.EventType.NodeChildrenChanged == event.getType()) {
                     System.out.println("\r\n监听到子节点发生了变化事件，新的子节点为：");
-                    zooKeeper.getChildren("/test", this, new MyChildrenCallback(), null);
+                    List<String> zooChildren = null;
+                    zooChildren = zooKeeper.getChildren("/test", true);
+                    for (String child : zooChildren) {
+                        System.out.print(child + ",");
+                    }
                 } else if (Event.EventType.DataWatchRemoved == event.getType()) {
                     System.out.println("\r\n监听到节点数据监听移除事件，path为：" + event.getPath());
                 } else if (Event.EventType.ChildWatchRemoved == event.getType()) {
@@ -95,38 +102,3 @@ public class DataOpASyncDemo implements Watcher {
         }
     }
 }
-
-class MyChildrenCallback implements AsyncCallback.ChildrenCallback {
-    @Override
-    public void processResult(int rc, String path, Object ctx, List<String> children) {
-        if(KeeperException.Code.get(rc) == KeeperException.Code.OK){
-            for (String child : children) {
-                System.out.print(child + ",");
-            }
-            System.out.println();
-        }
-    }
-}
-
-class MyStatCallback implements AsyncCallback.StatCallback {
-    @Override
-    public void processResult(int rc, String path, Object ctx, Stat stat) {
-        if(KeeperException.Code.OK == KeeperException.Code.get(rc)){
-            System.out.println(path + "节点已存在");
-        } else if(KeeperException.Code.NONODE == KeeperException.Code.get(rc)) {
-            System.out.println(path + "节点不存在");
-        }
-    }
-}
-
-class MyCreate2Callback implements AsyncCallback.Create2Callback {
-    @Override
-    public void processResult(int rc, String path, Object ctx, String name, Stat stat) {
-        if(KeeperException.Code.OK == KeeperException.Code.get(rc)){
-            System.out.println(path + "节点创建成功");
-        } else {
-            System.out.println(path + "节点创建失败");
-        }
-    }
-}
-

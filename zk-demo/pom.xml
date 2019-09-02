@@ -12,6 +12,7 @@
 	<properties>
 		<junit.version>4.12</junit.version>
 		<zk.version>3.5.5</zk.version>
+		<curator.version>4.2.0</curator.version>
 	</properties>
 
 	<dependencyManagement>
@@ -28,6 +29,13 @@
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
+
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-recipes</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	<modules>
