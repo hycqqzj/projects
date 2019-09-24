@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class MergeSort {
 
 	public static void main(String[] args) {
-		int[] arr = new int[] { 15, 17, 8, 10, 9, 25, 21, 24, 22, 28 };
+		int[] arr = { 5, 9, 3, 1, 6, 2, 4, 8 };
 
 		sort(arr, 0, arr.length - 1);
 		for (int i = 0; i <= arr.length - 1; i++) {
@@ -45,7 +45,8 @@ public class MergeSort {
 		int[] left = Arrays.copyOfRange(arr, begin, middle + 1);
 		int[] right = Arrays.copyOfRange(arr, middle + 1, end + 1);
 		while (i < left.length && j < right.length) {
-			if (left[i] < right[j]) {
+			if (left[i] <= right[j]) {
+				// 此处使用<=可以让整个算法是稳定的排序算法
 				arr[k++] = left[i++];
 			} else {
 				arr[k++] = right[j++];
