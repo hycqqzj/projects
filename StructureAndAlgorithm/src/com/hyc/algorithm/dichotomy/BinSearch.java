@@ -6,19 +6,19 @@ package com.hyc.algorithm.dichotomy;
 public class BinSearch {
 
 	public static void main(String[] args) {
-		int[] a = { 1, 3, 4, 5, 6, 8, 8, 8, 11, 18 };
-		System.out.println(bsearch(a, 10, 8));
-		System.out.println(bsearchFist(a, 10, 8));
-		System.out.println(bsearchLast(a, 10, 8));
-		System.out.println(bsearchFisrtGTE(a, 10, 7));
-		System.out.println(bsearchLastLTE(a, 10, 7));
+		int[] a = { 1, 4, 7, 11, 15 };
+		System.out.println(bsearch(a, 5, 8));
+		System.out.println(bsearchFist(a, 5, 8));
+		System.out.println(bsearchLast(a, 5, 8));
+		System.out.println(bsearchFisrtGTE(a, 5, 7));
+		System.out.println(bsearchLastLTE(a, 5, 5));
 	}
-	
+
 	/**
 	 * 查找值等于给定值的位置
 	 * 
-	 * @param a 数组
-	 * @param n 数组长度
+	 * @param a     数组
+	 * @param n     数组长度
 	 * @param value 值
 	 * @return
 	 */
@@ -35,15 +35,15 @@ public class BinSearch {
 				return mid;
 			}
 		}
-		
+
 		return -1;
 	}
 
 	/**
 	 * 查找第一个值等于给定值的位置
 	 * 
-	 * @param a 数组
-	 * @param n 数组长度
+	 * @param a     数组
+	 * @param n     数组长度
 	 * @param value 值
 	 * @return
 	 */
@@ -63,15 +63,15 @@ public class BinSearch {
 					high = mid - 1;
 			}
 		}
-		
+
 		return -1;
 	}
-	
+
 	/**
 	 * 查找最后一个值等于给定值的位置
 	 * 
-	 * @param a 数组
-	 * @param n 数组长度
+	 * @param a     数组
+	 * @param n     数组长度
 	 * @param value 值
 	 * @return
 	 */
@@ -91,15 +91,15 @@ public class BinSearch {
 					low = mid + 1;
 			}
 		}
-		
+
 		return -1;
 	}
-	
+
 	/**
 	 * 查找第一个值大于等于给定值的位置
 	 * 
-	 * @param a 数组
-	 * @param n 数组长度
+	 * @param a     数组
+	 * @param n     数组长度
 	 * @param value 值
 	 * @return
 	 */
@@ -109,7 +109,7 @@ public class BinSearch {
 		while (low <= high) {
 			int mid = low + ((high - low) >> 1);
 			if (a[mid] >= value) {
-				if(mid == 0 || a[mid - 1] < value) {
+				if (mid == 0 || a[mid - 1] < value) {
 					return mid;
 				}
 				high = mid - 1;
@@ -117,15 +117,15 @@ public class BinSearch {
 				low = mid + 1;
 			}
 		}
-		
+
 		return -1;
 	}
-	
+
 	/**
 	 * 查找最后一个值小于等于给定值的位置
 	 * 
-	 * @param a 数组
-	 * @param n 数组长度
+	 * @param a     数组
+	 * @param n     数组长度
 	 * @param value 值
 	 * @return
 	 */
@@ -137,13 +137,13 @@ public class BinSearch {
 			if (a[mid] > value) {
 				high = mid - 1;
 			} else if (a[mid] <= value) {
-				if(mid == 0 || a[mid + 1] > value) {
+				if (mid == n - 1 || a[mid + 1] > value) {
 					return mid;
 				}
 				low = mid + 1;
 			}
 		}
-		
+
 		return -1;
 	}
 
