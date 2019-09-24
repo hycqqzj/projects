@@ -11,38 +11,45 @@ public class QuickSort {
 	}
 
 	/**
-	 * 快速排序
-	 * 平均时间复杂度：O(N*logN)
+	 * 快速排序 平均时间复杂度：O(N*logN)
+	 * 
 	 * @param arr
 	 * @param low
 	 * @param high
 	 */
 	private static void sort(int[] arr, int low, int high) {
 		if (low >= high) {
-            return;
-        }
-		
+			return;
+		}
+
+		int p = partition(arr, low, high);
+		sort(arr, low, p - 1); // 递归调用，分治
+		sort(arr, p + 1, high); // 递归调用，分治
+	}
+
+	private static int partition(int[] arr, int low, int high) {
+		int pivor = arr[low];
 		int i = low;
 		int j = high;
-		int index = arr[i];
+		
 		while (i < j) {
-			while (i < j && arr[j] >= index) {
+			while (i < j && arr[j] >= pivor) {
 				j--;
 			}
-			if(i < j) {
+			if (i < j) {
 				arr[i++] = arr[j];
 			}
 			
-			while(i < j && arr[i] <= index) {
+			while (i < j && arr[i] <= pivor) {
 				i++;
 			}
-			if(i < j) {
+			if (i < j) {
 				arr[j--] = arr[i];
 			}
 		}
-		arr[i] = index; // 将基准数填入最后的坑
-		sort(arr, low, i - 1); // 递归调用，分治
-		sort(arr, i + 1, high); // 递归调用，分治
+		// 将基准数填入最后的坑
+		arr[i] = pivor;
+		return i;
 	}
 
 }
