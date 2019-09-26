@@ -1,6 +1,7 @@
 package com.hyc.structure.tree;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
 import com.hyc.structure.tree.node.TreeNode;
 
@@ -31,6 +32,34 @@ public class BinTree {
 	}
 
 	/**
+	 * 前序遍历-非递归遍历
+	 * 
+	 * 1.先将根节点入栈 2.访问根节点 3.如果根节点存在右孩子，则将右孩子入栈
+	 * 4.如果根节点存在左孩子，则将左孩子入栈（注意：一定是右孩子先入栈，然后左孩子入栈） 5.重复2-4
+	 */
+	public void preOrder2(TreeNode root) {
+		if (root == null) {
+			return;
+		}
+
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		stack.add(root);
+		while (!stack.isEmpty()) {
+			TreeNode node = stack.pop();
+			System.out.print(node.getData() + ",");
+			if (node.getRight() != null) {
+				stack.add(node.getRight());
+			}
+			if (node.getLeft() != null) {
+				stack.add(node.getLeft());
+			}
+		}
+
+		System.out.println();
+
+	}
+
+	/**
 	 * 中序遍历，left-data-right
 	 * 
 	 * @param root
@@ -46,6 +75,33 @@ public class BinTree {
 	}
 
 	/**
+	 * 中序遍历-非递归遍历
+	 * 
+	 * 1.先将根节点入栈 2.将当前节点的所有左孩子入栈，直到左孩子为空 3.访问栈顶元素，如果栈顶元素存在右孩子，则继续第2步
+	 * 4.重复第2、3步，直到栈为空并且所有的节点都被访问
+	 * 
+	 * @param root
+	 */
+	public void midOrder2(TreeNode root) {
+		if (root == null) {
+			return;
+		}
+
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		TreeNode tmp = root;
+		while (!stack.isEmpty() || tmp != null) {
+			while (tmp != null) {
+				stack.push(tmp);
+				tmp = tmp.getLeft();
+			}
+			tmp = stack.pop();
+			System.out.print(tmp.getData() + ",");
+			tmp = tmp.getRight();
+		}
+		System.out.println();
+	}
+
+	/**
 	 * 后序遍历，left-right-data
 	 * 
 	 * @param root
@@ -58,6 +114,42 @@ public class BinTree {
 		postOrder(root.getLeft());
 		postOrder(root.getRight());
 		System.out.print(root.getData() + ",");
+	}
+
+	/**
+	 * 后序遍历-非递归遍历
+	 * 
+	 * 1.根节点入栈 2.将根节点的左子树入栈，直到最左，没有左孩子为止
+	 * 3.得到栈顶元素的值，先不访问，判断栈顶元素是否存在右孩子，如果存在并且没有被访问，则将右孩子入栈，否则，就访问栈顶元素
+	 * 
+	 * @param root
+	 */
+	public void postOrder2(TreeNode root) {
+		if (root == null) {
+			return;
+		}
+
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		stack.add(root);
+		TreeNode tmp = root;
+		TreeNode pre = null;
+
+		while (tmp != null || !stack.isEmpty()) {
+			while (tmp != null) {
+				stack.add(tmp);
+				tmp = tmp.getLeft();
+			}
+
+			tmp = stack.peek();
+			if (tmp.getRight() == null || pre == tmp.getRight()) {
+				tmp = stack.pop();
+				System.out.println(tmp.getData() + ",");
+				pre = tmp;
+				tmp = null;
+			} else {
+				tmp = tmp.getRight();
+			}
+		}
 	}
 
 	/**
@@ -81,7 +173,7 @@ public class BinTree {
 		}
 		// 访问该节点
 		System.out.print(node.getData() + ",");
-		
+
 		// 左孩子入队
 		if (node.getLeft() != null) {
 			queue.add(node.getLeft());
@@ -90,7 +182,7 @@ public class BinTree {
 		if (node.getRight() != null) {
 			queue.add(node.getRight());
 		}
-		
+
 		// 递归遍历
 		levelOrder(queue);
 	}
@@ -140,7 +232,11 @@ public class BinTree {
 		BinTree tree = new BinTree();
 		tree.setRoot(root);
 
-		tree.levelOrder(null);
+		tree.preOrder(root);
+		System.out.println("\r\n=================");
+		tree.preOrder2(root);
+
+		// tree.levelOrder(null);
 
 		System.out.println("\r\n=================");
 		System.out.println(tree.getHeight(tree.root));
